@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using elastic_search_demo.Elastic;
+using elastic_search_demo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,8 @@ namespace elastic_search_demo
             services.AddSingleton(typeof(ElasticClientProvider));
 
             services.AddTransient(typeof(DataIndexer));
+
+            services.AddTransient<ISearchService, SearchService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +53,13 @@ namespace elastic_search_demo
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Recipe}/{action=Index}/{id?}");
+            });
         }
     }
 }

@@ -10,11 +10,11 @@ namespace elastic_search_demo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class IndexController : ControllerBase
     {
         private readonly DataIndexer _indexer;
 
-        public ValuesController(DataIndexer indexer)
+        public IndexController(DataIndexer indexer)
         {
             _indexer = indexer;
         }
